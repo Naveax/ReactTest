@@ -8,6 +8,8 @@
     "dev": "node ./scripts/dev-all.cjs",
     "dev:api": "bun run ./scripts/dev-api.cjs",
     "dev:web": "cd apps/web && bun run --bun dev",
+    "doctor": "node ./scripts/doctor.cjs",
+    "test:smoke": "node ./scripts/smoke-api.cjs",
     "setup": "bun run setup:api && bun run setup:web",
     "setup:api": "bun run ./scripts/setup-api.cjs",
     "setup:web": "cd apps/web && bun install",

@@ -29,6 +29,12 @@ bun run setup
 
 `setup:api` automatically stops stale API/watch processes on port `8000` before installing packages.
 
+Optional environment preflight:
+
+```bash
+bun run doctor
+```
+
 ## 3) Run both backend + frontend with one command (recommended)
 
 ```bash
@@ -76,6 +82,14 @@ bun run dev
 - `POST /api/certificates`
 - `GET /api/certificates/{certificate_id}`
 - `GET /api/certificates/verify?code=...`
+
+## Smoke test
+
+After `bun run dev` is running:
+
+```bash
+bun run test:smoke
+```
 
 ## Stability notes
 
