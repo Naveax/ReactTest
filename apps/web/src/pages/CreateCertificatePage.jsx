@@ -131,11 +131,13 @@ export default function CreateCertificatePage() {
         )}
       </section>
 
-      <aside className="rounded-3xl border border-cyan-200 bg-cyan-950 p-6 text-cyan-50 shadow-board lg:col-span-2 dark:border-cyan-800 dark:bg-slate-900">
-        <h3 className="font-display text-xl font-semibold">Last creation result</h3>
+      <aside className="rounded-3xl border border-cyan-200 bg-cyan-50 p-6 text-slate-800 shadow-board lg:col-span-2 dark:border-cyan-800 dark:bg-slate-900 dark:text-cyan-50">
+        <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-cyan-50">
+          Last creation result
+        </h3>
 
         {!result && (
-          <p className="mt-4 text-sm text-cyan-100/80">
+          <p className="mt-4 text-sm text-slate-600 dark:text-cyan-100/80">
             Submit the form to get a `certificate_id` and `verification_code`.
           </p>
         )}
@@ -146,7 +148,7 @@ export default function CreateCertificatePage() {
             <ResultRow label="Verification Code" value={result.verification_code} />
 
             <a
-              className="block rounded-xl bg-white/10 px-4 py-3 text-center font-medium text-cyan-50 transition hover:bg-white/20"
+              className="block rounded-xl bg-cyan-700 px-4 py-3 text-center font-medium text-white transition hover:bg-cyan-800 dark:bg-white/10 dark:text-cyan-50 dark:hover:bg-white/20"
               href={`/c/${result.certificate_id}`}
             >
               Open public certificate
@@ -178,8 +180,12 @@ function Field({ label, name, value, onChange, type = "text", ...rest }) {
 function ResultRow({ label, value }) {
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.14em] text-cyan-200">{label}</p>
-      <p className="mt-1 break-all rounded-xl bg-white/10 px-3 py-2 text-cyan-50">{value}</p>
+      <p className="font-mono text-xs uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-200">
+        {label}
+      </p>
+      <p className="mt-1 break-all rounded-xl border border-cyan-200 bg-white/80 px-3 py-2 text-slate-800 dark:border-cyan-700/50 dark:bg-white/10 dark:text-cyan-50">
+        {value}
+      </p>
     </div>
   );
 }
