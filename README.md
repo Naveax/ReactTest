@@ -97,6 +97,7 @@ bun run test:smoke
 - `VITE_API_BASE` is optional. If empty, frontend uses same-origin + Vite proxy (recommended for local dev).
 - CORS defaults include both `localhost:5173` and `127.0.0.1:5173`.
 - Backend is configured to use real MongoDB by default (`MONGODB_URL=mongodb://localhost:27017`, `MONGODB_DB=GPV`).
+- Canonical project database name is `GPV` (Generator Public Verification).
 - `ENABLE_MEMORY_FALLBACK=false` by default to avoid accidental non-persistent data usage.
 - UI includes a top-right theme toggle (`Dark Mode` / `Light Mode`) and stores selection in localStorage.
 - If no saved selection exists, UI defaults to dark theme between 19:00 and 07:00 local time.
@@ -105,12 +106,35 @@ bun run test:smoke
 - When `API_RELOAD=1`, exclude patterns avoid wildcard expansion issues on Windows (`.venv`, `__pycache__`).
 - `setup:api` and `dev:api` auto-recreate `.venv` if it was created by a different OS runtime (Windows vs WSL/Linux).
 
+## MongoDB Compass (WSL)
+
+If you run the project inside WSL and Compass runs on Windows, `localhost:27017` may point to a different MongoDB instance.
+
+1) Get WSL IP:
+
+```bash
+hostname -I | awk '{print $1}'
+```
+
+2) Connect from Compass with:
+
+```text
+mongodb://<WSL_IP>:27017/?directConnection=true
+```
+
+3) Verify project DB is visible:
+- Database: `GPV`
+- Collection: `certificates`
+
 ## Troubleshooting
 
 - If you see `Network Error` in UI:
   1) Ensure MongoDB is running: `docker compose up -d`
   2) Ensure API is healthy: open `http://localhost:8000/health` and confirm `"database":"mongo"`
   3) Start everything from root: `bun run dev`
+- If Compass does not show `GPV`:
+  1) Confirm container data: `docker exec certificate-mongodb mongosh --quiet --eval 'printjson(db.adminCommand({listDatabases:1}).databases.map(d=>d.name))'`
+  2) If `GPV` appears in command output but not in Compass, reconnect Compass using WSL IP (section above).
 - If `docker compose up -d` fails with `dockerDesktopLinuxEngine` pipe error:
   1) Start Docker Desktop manually
   2) Wait until Docker is fully running
