@@ -27,6 +27,8 @@ app.include_router(certificate_router)
 async def health():
     storage_mode = getattr(app.state, "storage_mode", "unknown")
     db_error = getattr(app.state, "db_error", None)
+    db_name = getattr(app.state, "mongodb_db_name", settings.mongodb_db)
+    collection_name = getattr(app.state, "mongodb_collection", settings.mongodb_collection)
 
     if db_error:
         return JSONResponse(
@@ -34,8 +36,15 @@ async def health():
             content={
                 "status": "degraded",
                 "database": storage_mode,
+                "db_name": db_name,
+                "collection": collection_name,
                 "detail": db_error,
             },
         )
 
-    return {"status": "ok", "database": storage_mode}
+    return {
+        "status": "ok",
+        "database": storage_mode,
+        "db_name": db_name,
+        "collection": collection_name,
+    }

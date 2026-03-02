@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     )
 
     mongodb_url: str = "mongodb://localhost:27017"
-    mongodb_db: str = "certificate_app"
+    mongodb_db: str = "GPV"
     mongodb_collection: str = "certificates"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     enable_memory_fallback: bool = False

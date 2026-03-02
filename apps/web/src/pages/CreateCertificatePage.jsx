@@ -78,11 +78,11 @@ export default function CreateCertificatePage() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-5">
-      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-board lg:col-span-3">
-        <h2 className="font-display text-2xl font-semibold text-slate-900">
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-board lg:col-span-3 dark:border-slate-700 dark:bg-slate-900/85">
+        <h2 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">
           Create Certificate
         </h2>
-        <p className="mt-1 text-sm text-slate-600">
+        <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
           Fill all fields. Backend validates data with Pydantic and stores it in
           MongoDB.
         </p>
@@ -116,7 +116,7 @@ export default function CreateCertificatePage() {
           </div>
 
           <button
-            className="inline-flex items-center rounded-full bg-cyan-700 px-6 py-3 font-medium text-white transition hover:bg-cyan-800 disabled:cursor-not-allowed disabled:bg-cyan-300"
+            className="inline-flex items-center rounded-full bg-cyan-700 px-6 py-3 font-medium text-white transition hover:bg-cyan-800 disabled:cursor-not-allowed disabled:bg-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-500 dark:disabled:bg-cyan-900"
             disabled={loading || !canSubmit}
             type="submit"
           >
@@ -125,13 +125,13 @@ export default function CreateCertificatePage() {
         </form>
 
         {error && (
-          <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <p className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800/60 dark:bg-red-950/40 dark:text-red-200">
             {error}
           </p>
         )}
       </section>
 
-      <aside className="rounded-3xl border border-cyan-200 bg-cyan-950 p-6 text-cyan-50 shadow-board lg:col-span-2">
+      <aside className="rounded-3xl border border-cyan-200 bg-cyan-950 p-6 text-cyan-50 shadow-board lg:col-span-2 dark:border-cyan-800 dark:bg-slate-900">
         <h3 className="font-display text-xl font-semibold">Last creation result</h3>
 
         {!result && (
@@ -161,9 +161,9 @@ export default function CreateCertificatePage() {
 function Field({ label, name, value, onChange, type = "text", ...rest }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm font-medium text-slate-700">{label}</span>
+      <span className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">{label}</span>
       <input
-        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 outline-none ring-cyan-300 transition focus:border-cyan-500 focus:ring"
+        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 outline-none ring-cyan-300 transition focus:border-cyan-500 focus:ring dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-cyan-400"
         name={name}
         onChange={onChange}
         required

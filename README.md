@@ -96,8 +96,10 @@ bun run test:smoke
 - Frontend dev server proxies `/api` requests to `http://127.0.0.1:8000` by default.
 - `VITE_API_BASE` is optional. If empty, frontend uses same-origin + Vite proxy (recommended for local dev).
 - CORS defaults include both `localhost:5173` and `127.0.0.1:5173`.
-- Backend is configured to use real MongoDB by default (`MONGODB_URL=mongodb://localhost:27017`).
+- Backend is configured to use real MongoDB by default (`MONGODB_URL=mongodb://localhost:27017`, `MONGODB_DB=GPV`).
 - `ENABLE_MEMORY_FALLBACK=false` by default to avoid accidental non-persistent data usage.
+- UI includes a top-right theme toggle (`Dark Mode` / `Light Mode`) and stores selection in localStorage.
+- If no saved selection exists, UI defaults to dark theme between 19:00 and 07:00 local time.
 - API hot reload is disabled by default for maximum stability on Windows.  
   If needed: `API_RELOAD=1 bun run dev`
 - When `API_RELOAD=1`, exclude patterns avoid wildcard expansion issues on Windows (`.venv`, `__pycache__`).

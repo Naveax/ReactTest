@@ -63,14 +63,14 @@ export default function CertificateViewPage() {
   }
 
   return (
-    <section className="rounded-[2rem] border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-cyan-50 p-8 shadow-board">
-      <p className="font-mono text-xs uppercase tracking-[0.24em] text-amber-700">
+    <section className="rounded-[2rem] border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-cyan-50 p-8 shadow-board dark:border-slate-700 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950">
+      <p className="font-mono text-xs uppercase tracking-[0.24em] text-amber-700 dark:text-cyan-300">
         Public Certificate
       </p>
-      <h2 className="mt-3 font-display text-4xl font-bold text-slate-900">
+      <h2 className="mt-3 font-display text-4xl font-bold text-slate-900 dark:text-slate-100">
         Certificate of Achievement
       </h2>
-      <p className="mt-2 text-sm text-slate-600">
+      <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
         This certificate confirms successful completion and verified assessment.
       </p>
 
@@ -91,10 +91,10 @@ export default function CertificateViewPage() {
           <Detail label="Certificate ID" value={certificate.certificate_id} mono />
         </div>
 
-        <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border-8 border-amber-300 bg-white text-center shadow">
+        <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border-8 border-amber-300 bg-white text-center shadow dark:border-cyan-700 dark:bg-slate-800">
           <div>
-            <p className="font-display text-4xl font-bold text-slate-900">{certificate.score}</p>
-            <p className="text-xs uppercase tracking-[0.16em] text-slate-500">{scoreLabel}</p>
+            <p className="font-display text-4xl font-bold text-slate-900 dark:text-slate-100">{certificate.score}</p>
+            <p className="text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-slate-300">{scoreLabel}</p>
           </div>
         </div>
       </div>
@@ -105,10 +105,10 @@ export default function CertificateViewPage() {
 function Detail({ label, value, mono = false, big = false }) {
   return (
     <div>
-      <p className="font-mono text-xs uppercase tracking-[0.14em] text-slate-500">{label}</p>
+      <p className="font-mono text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{label}</p>
       <p
         className={[
-          "mt-1 text-slate-900",
+          "mt-1 text-slate-900 dark:text-slate-100",
           mono ? "font-mono text-sm" : "",
           big ? "font-display text-3xl font-semibold" : "text-lg"
         ].join(" ")}
@@ -122,8 +122,8 @@ function Detail({ label, value, mono = false, big = false }) {
 function StatusCard({ text, tone }) {
   const className =
     tone === "error"
-      ? "border-red-200 bg-red-50 text-red-700"
-      : "border-cyan-200 bg-cyan-50 text-cyan-700";
+      ? "border-red-200 bg-red-50 text-red-700 dark:border-red-800/60 dark:bg-red-950/40 dark:text-red-200"
+      : "border-cyan-200 bg-cyan-50 text-cyan-700 dark:border-cyan-800/60 dark:bg-cyan-950/40 dark:text-cyan-200";
 
   return (
     <div className={`rounded-2xl border px-5 py-4 ${className}`}>

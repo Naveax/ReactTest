@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
@@ -17,6 +17,16 @@ body {
     radial-gradient(circle at 80% 0%, rgba(251, 146, 60, 0.18), transparent 30%),
     radial-gradient(circle at 50% 100%, rgba(22, 163, 74, 0.1), transparent 40%);
   min-height: 100vh;
+  color: #0f172a;
+}
+
+html.dark body {
+  background-color: #020617;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(8, 47, 73, 0.34), transparent 36%),
+    radial-gradient(circle at 80% 0%, rgba(76, 29, 149, 0.24), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(5, 150, 105, 0.16), transparent 40%);
+  color: #e2e8f0;
 }
 
 * {

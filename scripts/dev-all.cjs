@@ -54,12 +54,13 @@ function runScript(scriptName) {
     shell: false
   });
 
-  child.on("exit", (code) => {
-    if (!exiting && code !== 0) {
-      console.error(`[dev] ${scriptName} exited with code ${code}`);
-      killAll("SIGTERM");
-      process.exit(code || 1);
-    }
+  child.on("exit", (code, signal) => {
+    if (exiting) return;
+
+    const reason = signal ? `signal ${signal}` : `code ${code}`;
+    console.error(`[dev] ${scriptName} exited (${reason}), shutting down other processes...`);
+    killAll("SIGTERM");
+    process.exit(typeof code === "number" && code !== 0 ? code : 1);
   });
 
   children.push(child);

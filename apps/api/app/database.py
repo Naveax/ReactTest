@@ -29,6 +29,32 @@ class InMemoryCertificateCollection:
         return None
 
 
+async def ensure_unique_index(collection: Any, field: str, index_name: str) -> None:
+    """
+    Ensure a unique ascending index exists for the given field regardless of index name.
+    If a non-unique single-field index exists, replace it with a unique one.
+    """
+    index_info = await collection.index_information()
+    target_key = [(field, 1)]
+    existing_index_name: str | None = None
+    existing_is_unique = False
+
+    for name, spec in index_info.items():
+        key = spec.get("key")
+        if key == target_key:
+            existing_index_name = name
+            existing_is_unique = bool(spec.get("unique", False))
+            break
+
+    if existing_index_name and existing_is_unique:
+        return
+
+    if existing_index_name and not existing_is_unique:
+        await collection.drop_index(existing_index_name)
+
+    await collection.create_index(target_key, unique=True, name=index_name)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     client = None
@@ -45,12 +71,13 @@ async def lifespan(app: FastAPI):
             await client.admin.command("ping")
             database = client[settings.mongodb_db]
             certificates = database[settings.mongodb_collection]
-            await certificates.create_index("certificate_id", unique=True)
-            await certificates.create_index("verification_code", unique=True)
-        except Exception:
+            await ensure_unique_index(certificates, "certificate_id", "certificate_id_unique")
+            await ensure_unique_index(certificates, "verification_code", "verification_code_unique")
+        except Exception as exc:
             db_error = (
                 "MongoDB connection failed. Ensure MongoDB is running on "
-                f"{settings.mongodb_url} and reachable from the API process."
+                f"{settings.mongodb_url} and reachable from the API process. "
+                f"Error: {exc}"
             )
 
     if certificates is None and settings.enable_memory_fallback:
@@ -65,6 +92,8 @@ async def lifespan(app: FastAPI):
     app.state.certificates = certificates
     app.state.db_error = db_error
     app.state.storage_mode = storage_mode
+    app.state.mongodb_db_name = settings.mongodb_db
+    app.state.mongodb_collection = settings.mongodb_collection
 
     yield
 
